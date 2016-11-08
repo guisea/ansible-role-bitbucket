@@ -7,7 +7,7 @@
     - role: geerlingguy.java
       java_packages:
         - java-1.8.0-openjdk
-      when: ansible_os_distribution == 'RedHat'
+      when: ansible_os_family == 'RedHat'
     - role: geerlingguy.java
       java_packages:
         - openjdk-8-jdk
