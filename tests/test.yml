@@ -5,11 +5,20 @@
   remote_user: root
   pre_tasks:
     - name: Ensure JDK Version 8 available
-      apt_repository: repo='ppa:openjdk-r/ppa'
+      apt_repository: repo="{{ item }}'
       when: ansible_distribution == 'Ubuntu'
             and ( ansible_distribution_version == '12.04'
                   or ansible_distribution_version == '14.04')
-
+      with_items:
+        - "ppa:fkrull/deadsnakes-python2.7"
+        - "ppa:openjdk-r/ppa"
+    - name: Update Cache
+      apt:
+        name: python2.7
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'
+            and ( ansible_distribution_version == '12.04'
+                  or ansible_distribution_version == '14.04')
   roles:
     - role: geerlingguy.java
       java_packages:
