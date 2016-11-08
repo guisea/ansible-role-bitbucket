@@ -4,5 +4,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-role-java
-    - ansible-role-bitbucket
+    - role: geerlingguy.java
+      java_packages:
+        - java-1.8.0-openjdk
+    - role_under_test
