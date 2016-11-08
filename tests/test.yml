@@ -5,7 +5,7 @@
   remote_user: root
   pre_tasks:
     - name: Ensure JDK Version 8 available
-      apt_repository: repo="{{ item }}'
+      apt_repository: repo="{{ item }}"
       when: ansible_distribution == 'Ubuntu'
             and ( ansible_distribution_version == '12.04'
                   or ansible_distribution_version == '14.04')
@@ -19,6 +19,18 @@
       when: ansible_distribution == 'Ubuntu'
             and ( ansible_distribution_version == '12.04'
                   or ansible_distribution_version == '14.04')
+    - name: Ensure Centos SCL Release available
+      yum:
+        name: centos-release-SCL
+        state: installed
+      when: ansible_distribution == 'Centos'
+            and ( ansible_distribution_version == '6')
+    - name: Ensure SCL Python 2.7 installed
+      yum:
+        name: python27
+        state: installed
+      when: ansible_distribution == 'Centos'
+            and ( ansible_distribution_version == '6')
   roles:
     - role: geerlingguy.java
       java_packages:
