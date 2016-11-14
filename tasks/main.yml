@@ -54,6 +54,15 @@
     chown -Rf {{ bitbucket_user }}:{{ bitbucket_user }} {{ bitbucket_catalina }}
   args:
     creates: "{{ bitbucket_catalina }}/bin/start-bitbucket.sh"
+  when: not bitbucket_upgrade
+  notify: restart bitbucket
+  tags: hswong3i.bitbucket
+
+- name: unarchive package
+  shell: |
+    tar zxvf /tmp/{{ bitbucket_archive }} -C {{ bitbucket_catalina }} --strip-components=1
+    chown -Rf {{ bitbucket_user }}:{{ bitbucket_user }} {{ bitbucket_catalina }}
+  when: bitbucket_upgrade
   notify: restart bitbucket
   tags: hswong3i.bitbucket
 
